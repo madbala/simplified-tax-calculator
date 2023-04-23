@@ -126,12 +126,15 @@ const UserInputs = () => {
               </div>
             </div>
           </label>
-          <input
+          <CurrencyInput
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="phone1"
             type="text"
             value={eightyC}
-            onChange={(e) => setEightC(e.target.value)}
+            prefix="₹"
+            decimalsLimit={2}
+            intlConfig={{ locale: 'en-IN', currency: 'INR' }}
+            onValueChange={(value, name) => setEightC(value)}
             placeholder="Section 80C"
           />
         </div>
@@ -139,26 +142,32 @@ const UserInputs = () => {
           <label className="block text-gray-700 font-bold mb-2" htmlFor="phone">
             Section 80D (self and Family)
           </label>
-          <input
+          <CurrencyInput
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="phone2"
             type="text"
             placeholder="max(Rs 25000)"
             value={eightyDSelf}
-            onChange={(e) => setEightDSelf(e.target.value)}
+            prefix="₹"
+            decimalsLimit={2}
+            intlConfig={{ locale: 'en-IN', currency: 'INR' }}
+            onValueChange={(value, name) => setEightDSelf(value)}
           />
         </div>
         <div className="mt-5">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="phone">
             Section 80D (Senior Citizen)
           </label>
-          <input
+          <CurrencyInput
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="phone2"
             type="text"
             placeholder="max(Rs 50000)"
             value={eightyDParent}
-            onChange={(e) => setEightDParent(e.target.value)}
+            prefix="₹"
+            decimalsLimit={2}
+            intlConfig={{ locale: 'en-IN', currency: 'INR' }}
+            onValueChange={(value, name) => setEightDParent(value)}
           />
         </div>
 
