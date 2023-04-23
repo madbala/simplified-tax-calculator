@@ -40,7 +40,7 @@ const Result = () => {
       let result = (slab4 / 100) * 30;
       incomeTax = result + 12500 + 100000;
     }
-    return toIndianCurrency(incomeTax);
+    return incomeTax;
   };
 
   //new regime is pending
@@ -74,24 +74,35 @@ const Result = () => {
       let result = (slab6 / 100) * 30;
       incomeTax = result + 15000 + 30000 + 45000+60000;
     }
-    return toIndianCurrency(incomeTax);
+    return incomeTax;
   };
 
+<<<<<<< HEAD
   const suggestedTaxRegime = oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? `Old Tax Regime` : oldRegimeTaxCalcuation() == newRegimeTaxCalcuation() ? `Both Tax Regime values are similar` : `New Tax Regime`
+=======
+  const taxWithCess = (taxAmount)=>{
+    if(taxAmount){
+      const finalVal = taxAmount + (taxAmount/100) * 4;
+      return toIndianCurrency(finalVal)
+    }
+  }
+
+  const suggestedTaxRegime = oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? `New Tax Regime` : oldRegimeTaxCalcuation() == newRegimeTaxCalcuation() ? `Both Tax Regime values are similar` : `Old Tax Regime`
+>>>>>>> 7480262af4c4cac47527f3f19cf4a1a6fd1553c3
   const data = [
     {
       name: 'Old Tax Regime',
       ["Gross total income"]: grossSalary,
       Deductions: oldRegimeDeductions,
       ["Net taxable income"]: netTaxableIncome_OLD,
-      ["Total income tax"]: oldRegimeTaxCalcuation()
+      ["Total income tax"]: toIndianCurrency(oldRegimeTaxCalcuation())
     },
     {
       name: 'New Tax Regime',
       ["Gross total income"]: grossSalary,
       Deductions: standardDeductions,
       ["Net taxable income"]: netTaxableIncome_NEW,
-      ["Total income tax"]: newRegimeTaxCalcuation()
+      ["Total income tax"]: toIndianCurrency(newRegimeTaxCalcuation())
     }
   ];
   const CustomTooltip = ({ active, payload, label }) => {
@@ -152,11 +163,11 @@ const Result = () => {
         </div>
         <div className="w-full flex flex-row mb-2 mt-4">
           <div className="w-3/5 flex justify-center">Total income tax</div>
-          <div className="w-1/5 flex justify-center rounded-none border bg-green-500">
-            {oldRegimeTaxCalcuation()}
+          <div className={`w-1/5 flex justify-center rounded-none border ${suggestedTaxRegime.toLocaleLowerCase().includes('old')?'bg-green-500':suggestedTaxRegime.toLocaleLowerCase().includes('new')?'bg-red-500':'bg-gray-500'}`}>
+            {toIndianCurrency(oldRegimeTaxCalcuation())}
           </div>
-          <div className="w-1/5 flex justify-center rounded-none border bg-red-500">
-            {newRegimeTaxCalcuation()}
+          <div className={`w-1/5 flex justify-center rounded-none border ${suggestedTaxRegime.toLocaleLowerCase().includes('new')?'bg-green-500':suggestedTaxRegime.toLocaleLowerCase().includes('old')?'bg-red-500':'bg-gray-500'}`}>
+            {toIndianCurrency(newRegimeTaxCalcuation())}
           </div>
         </div>
 
@@ -169,22 +180,22 @@ const Result = () => {
 
         <div className="w-full flex flex-row mb-2 mt-5 ">
           <div className="w-3/5 flex justify-center">Income tax</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(newRegimeTaxCalcuation())}</div>
         </div>
         <div className="w-full flex flex-row mb-2 ">
           <div className="w-3/5 flex justify-center">
             Total income tax + 4% CESS
           </div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{taxWithCess(oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{taxWithCess(newRegimeTaxCalcuation())}</div>
         </div>
         <div className="w-full flex flex-row mb-2 ">
           <div className="w-3/5 flex justify-center">
             Total in-hand after tax
           </div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(grossSalary-oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(grossSalary-newRegimeTaxCalcuation())}</div>
         </div>
       </div>
 
