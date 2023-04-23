@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalState";
-<<<<<<< HEAD
-import { toIndianCurrency } from "@/utils";
-=======
 import { toIndianCurrency } from "@/utils"
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
 
 const Result = () => {
   const { transactions } = useContext(GlobalContext);
@@ -44,7 +40,7 @@ const Result = () => {
       let result = (slab4 / 100) * 30;
       incomeTax = result + 12500 + 100000;
     }
-    return toIndianCurrency(incomeTax);
+    return incomeTax;
   };
 
   //new regime is pending
@@ -78,28 +74,31 @@ const Result = () => {
       let result = (slab6 / 100) * 30;
       incomeTax = result + 15000 + 30000 + 45000+60000;
     }
-    return toIndianCurrency(incomeTax);
+    return incomeTax;
   };
 
-<<<<<<< HEAD
-  const betterRegimeText=oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? "old regime " : "new regime"
-  return (
-=======
-  const suggestedTaxRegime = oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? `Old Tax Regime` : oldRegimeTaxCalcuation() == newRegimeTaxCalcuation() ? `Both Tax Regime values are similar` : `New Tax Regime`
+  const taxWithCess = (taxAmount)=>{
+    if(taxAmount){
+      const finalVal = taxAmount + (taxAmount/100) * 4;
+      return toIndianCurrency(finalVal)
+    }
+  }
+
+  const suggestedTaxRegime = oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? `New Tax Regime` : oldRegimeTaxCalcuation() == newRegimeTaxCalcuation() ? `Both Tax Regime values are similar` : `Old Tax Regime`
   const data = [
     {
       name: 'Old Tax Regime',
       ["Gross total income"]: grossSalary,
       Deductions: oldRegimeDeductions,
       ["Net taxable income"]: netTaxableIncome_OLD,
-      ["Total income tax"]: oldRegimeTaxCalcuation()
+      ["Total income tax"]: toIndianCurrency(oldRegimeTaxCalcuation())
     },
     {
       name: 'New Tax Regime',
       ["Gross total income"]: grossSalary,
       Deductions: standardDeductions,
       ["Net taxable income"]: netTaxableIncome_NEW,
-      ["Total income tax"]: newRegimeTaxCalcuation()
+      ["Total income tax"]: toIndianCurrency(newRegimeTaxCalcuation())
     }
   ];
   const CustomTooltip = ({ active, payload, label }) => {
@@ -120,7 +119,6 @@ const Result = () => {
   };
 
   return (<>
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
     <div className="w-3/4 h-full pl-10">
       <div className="flex flex-col h-3/4">
         <div className="w-full flex flex-row mb-2">
@@ -161,43 +159,39 @@ const Result = () => {
         </div>
         <div className="w-full flex flex-row mb-2 mt-4">
           <div className="w-3/5 flex justify-center">Total income tax</div>
-          <div className="w-1/5 flex justify-center rounded-none border bg-green-500">
-            {oldRegimeTaxCalcuation()}
+          <div className={`w-1/5 flex justify-center rounded-none border ${suggestedTaxRegime.toLocaleLowerCase().includes('old')?'bg-green-500':suggestedTaxRegime.toLocaleLowerCase().includes('new')?'bg-red-500':'bg-gray-500'}`}>
+            {toIndianCurrency(oldRegimeTaxCalcuation())}
           </div>
-          <div className="w-1/5 flex justify-center rounded-none border bg-red-500">
-            {newRegimeTaxCalcuation()}
+          <div className={`w-1/5 flex justify-center rounded-none border ${suggestedTaxRegime.toLocaleLowerCase().includes('new')?'bg-green-500':suggestedTaxRegime.toLocaleLowerCase().includes('old')?'bg-red-500':'bg-gray-500'}`}>
+            {toIndianCurrency(newRegimeTaxCalcuation())}
           </div>
         </div>
 
         <div className="border p-4 mt-2 mb-2">
           <p>
             Which tax regime is better?{" "}
-<<<<<<< HEAD
-            <span className="text-green-700 font-bold">{betterRegimeText}</span>
-=======
             <span className="text-green-700 font-bold">{suggestedTaxRegime}</span>
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
           </p>
         </div>
 
         <div className="w-full flex flex-row mb-2 mt-5 ">
           <div className="w-3/5 flex justify-center">Income tax</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(newRegimeTaxCalcuation())}</div>
         </div>
         <div className="w-full flex flex-row mb-2 ">
           <div className="w-3/5 flex justify-center">
             Total income tax + 4% CESS
           </div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{taxWithCess(oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{taxWithCess(newRegimeTaxCalcuation())}</div>
         </div>
         <div className="w-full flex flex-row mb-2 ">
           <div className="w-3/5 flex justify-center">
             Total in-hand after tax
           </div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
-          <div className="w-1/5 flex justify-center border">10,000</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(grossSalary-oldRegimeTaxCalcuation())}</div>
+          <div className="w-1/5 flex justify-center border">{toIndianCurrency(grossSalary-newRegimeTaxCalcuation())}</div>
         </div>
       </div>
 

@@ -158,10 +158,7 @@ const UserInputs = () => {
             decimalsLimit={2}
             intlConfig={{ locale: 'en-IN', currency: 'INR' }}
             onValueChange={(value, name) => setEightDSelf(value)}
-<<<<<<< HEAD
-=======
             placeholder="max(Rs 25000)"
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
           />
         </div>
         <div className="mt-5">
@@ -177,10 +174,7 @@ const UserInputs = () => {
             decimalsLimit={2}
             intlConfig={{ locale: 'en-IN', currency: 'INR' }}
             onValueChange={(value, name) => setEightDParent(value)}
-<<<<<<< HEAD
-=======
             placeholder="max(Rs 50000)"
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
           />
         </div>
 
