@@ -1,13 +1,9 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "@/context/GlobalState";
-<<<<<<< HEAD
-import { toIndianCurrency } from "@/utils";
-=======
 import { toIndianCurrency } from "@/utils"
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
 
 const Result = () => {
   const { transactions } = useContext(GlobalContext);
@@ -81,10 +77,6 @@ const Result = () => {
     return toIndianCurrency(incomeTax);
   };
 
-<<<<<<< HEAD
-  const betterRegimeText=oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? "old regime " : "new regime"
-  return (
-=======
   const suggestedTaxRegime = oldRegimeTaxCalcuation() > newRegimeTaxCalcuation() ? `Old Tax Regime` : oldRegimeTaxCalcuation() == newRegimeTaxCalcuation() ? `Both Tax Regime values are similar` : `New Tax Regime`
   const data = [
     {
@@ -120,7 +112,6 @@ const Result = () => {
   };
 
   return (<>
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
     <div className="w-3/4 h-full pl-10">
       <div className="flex flex-col h-3/4">
         <div className="w-full flex flex-row mb-2">
@@ -172,11 +163,7 @@ const Result = () => {
         <div className="border p-4 mt-2 mb-2">
           <p>
             Which tax regime is better?{" "}
-<<<<<<< HEAD
-            <span className="text-green-700 font-bold">{betterRegimeText}</span>
-=======
             <span className="text-green-700 font-bold">{suggestedTaxRegime}</span>
->>>>>>> 40533eb2531772da9c23d0c71a5c9665e66c8f7b
           </p>
         </div>
 
